@@ -10,7 +10,7 @@ class Content extends React.Component {
     }
 
     componentDidMount() {
-        getPosts("photoshopbattles", "top", 50).then((result => {this.setState({posts: result})}));
+        getPosts("photoshopbattles", "hot", 50).then((result => {this.setState({posts: result})}));
         
         console.log(this.state.posts);
     }

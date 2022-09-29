@@ -19,10 +19,15 @@ async function getPosts(subreddit, type, limit=100, verbose = false){
         const numberOfPosts = posts.data.data.children.length
         for (var i=0; i<numberOfPosts; i++){
             var current_post = posts.data.data.children[i].data;
+            
             var id_ = current_post.id;
             var title = current_post.title;
             var author = current_post.author;
             var imageUrl = current_post.url;
+            if (!imageUrl.includes("i.redd.it")){
+                // doesnt contain an image -> meta or some sh
+                continue;
+            }
             var score = current_post.score;
             allPosts.push(new RedditPost(id_, title, author, imageUrl, score));
             if (verbose) {

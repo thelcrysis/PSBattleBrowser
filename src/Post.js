@@ -4,7 +4,6 @@ import Card from 'react-bootstrap/Card';
 class Post extends React.Component {
     constructor(props){
       super(props)
-      console.log(props)
     }
 
     render() {
