@@ -24,7 +24,8 @@ async function getPosts(subreddit, type, limit=100, verbose = false){
             var title = current_post.title;
             var author = current_post.author;
             var imageUrl = current_post.url;
-            if (!imageUrl.includes("i.redd.it")){
+            console.log(imageUrl)
+            if (!imageUrl.includes("i.redd.it") && !imageUrl.includes("i.imgur.com")){
                 // doesnt contain an image -> meta or some sh
                 continue;
             }
@@ -63,7 +64,7 @@ async function getComments(postId, verbose = false){
 
     var allComments = [];
     try {
-        const comments = await axios.get(`https://www.reddit.com/r/photoshopbattles/comments/${postId}/.json`, {params : {sort: "top"}});
+        const comments = await axios.get(`https://www.reddit.com/r/photoshopbattles/comments/${postId}/.json`, {params : {sort: "top", limit:30}});
         const numberOfComments = comments.data[1].data.children.length;
         for (var i=0; i<numberOfComments; i++){
             var current_comment = comments.data[1].data.children[i]

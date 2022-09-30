@@ -1,22 +1,34 @@
 import { Container, Col, Row} from "react-bootstrap";
 import Post from "./Post";
-import {getPosts} from "./reddit";
+import {getComments, getPosts} from "./reddit";
 import React from 'react'
-
+import withRouter from "./withRouter";
 class Content extends React.Component {
     constructor(props){
         super(props);
-        this.state = {posts:[], showPosts:null};
+        this.state = {posts:[]};
     }
 
     componentDidMount() {
-        getPosts("photoshopbattles", "hot", 50).then((result => {this.setState({posts: result})}));
-        
-        console.log(this.state.posts);
+        if (this.props.type == "post"){
+            getPosts("photoshopbattles", this.props.typeOfPosts, 30).then((result => {this.setState({posts: result})}));
+        }
+        if (this.props.type == "comment"){
+            var postId = this.props.params.id
+            console.log('here')
+            getComments(postId).then((result => {this.setState({posts: result})}))
+
+        }
     }
 
     render() {
-        var lines = this.state.posts.map((post) => {return (<Post post={post} />);})
+        var lines = null;
+        var originalImage = null;
+        if (this.props.type == "post"){
+            lines = this.state.posts.map((post) => {return (<Post type="post" post={post} />);})
+        } else if (this.props.type == "comment"){
+            lines = this.state.posts.map((post) => {return (<Post type="comment" post={post} />);})
+        }
         return (
             <Container>
                 <Row md="auto">
@@ -31,4 +43,4 @@ class Content extends React.Component {
     };
 }
 
-export default Content;
+export default withRouter(Content);
