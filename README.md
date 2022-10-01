@@ -11,6 +11,7 @@ If you are interested how app looks, you can find a screenshot under `installati
 ### Installation
 ```
 git clone https://github.com/thelcrysis/PSBattleBrowser.git
+cd PSBattleBrowser
 npm install
 npm run start
 ```
